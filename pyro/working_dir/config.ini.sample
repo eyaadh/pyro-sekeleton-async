@@ -11,5 +11,3 @@ tmp_dir = pyro/working_dir/tmp
 dustbin = -1001318471833
 [logging-configuration]
 logging_dir = /tmp/pyro-skeleton
-[cat-configs]
-api_key = ff801b86-b761-4e81-9ed9-8c1cbd0ce562
