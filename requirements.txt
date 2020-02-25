@@ -1,0 +1,15 @@
+aiofiles==0.4.0
+aiohttp==3.6.2
+async-generator==1.10
+async-lru==1.0.1
+async-timeout==3.0.1
+attrs==19.3.0
+chardet==3.0.4
+configparser==4.0.2
+idna==2.9
+multidict==4.7.5
+pyaes==1.6.1
+Pyrogram===0.16.0.asyncio
+PySocks==1.7.0
+TgCrypto==1.2.0
+yarl==1.4.2
