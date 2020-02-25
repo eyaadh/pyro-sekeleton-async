@@ -5,8 +5,11 @@ api_hash = xxxxxxxxxxx
 root = pyro/plugins
 [bot-configuration]
 session_name = bot-skeleton
-api_key = xxxxx:xxxxxxxxxxxxx
+api_key = xxxxxxxxxx
 workers = 200
 tmp_dir = pyro/working_dir/tmp
+dustbin = -1001318471833
 [logging-configuration]
 logging_dir = /tmp/pyro-skeleton
+[cat-configs]
+api_key = ff801b86-b761-4e81-9ed9-8c1cbd0ce562

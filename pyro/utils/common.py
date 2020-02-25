@@ -12,6 +12,7 @@ class Common:
         self.bot_api_key = self.bot_config.get("bot-configuration", "api_key")
         self.bot_workers = int(self.bot_config.get("bot-configuration", "workers"))
         self.tmp_dir = Path(self.bot_config.get("bot-configuration", "tmp_dir"))
+        self.dustbin = int(self.bot_config.get("bot-configuration", "dustbin"))
         self.log_dir = self.bot_config.get("logging-configuration", "logging_dir")
         self.log_file = Path(f"{self.log_dir}/log.log")
 
