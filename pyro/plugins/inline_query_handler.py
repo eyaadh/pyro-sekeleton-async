@@ -8,7 +8,7 @@ from pyrogram.client.ext import utils
 from pyro.utils.common import botCommon
 from pyrogram.api import functions, types
 from pyrogram.errors import QueryIdInvalid
-from pyro.utils.helpers.file_properties import CustomFileProperties
+from pyro.utils.file_properties import CustomFileProperties
 
 
 @bot.on_inline_query()
