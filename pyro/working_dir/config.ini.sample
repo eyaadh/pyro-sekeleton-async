@@ -11,3 +11,5 @@ tmp_dir = pyro/working_dir/tmp
 dustbin = -1001318471833
 [logging-configuration]
 logging_dir = /tmp/pyro-skeleton
+[youtube-configuration]
+api_key = xxxxxxxxxxxxxxx

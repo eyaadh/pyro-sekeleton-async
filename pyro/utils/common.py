@@ -14,6 +14,7 @@ class Common:
         self.tmp_dir = Path(self.bot_config.get("bot-configuration", "tmp_dir"))
         self.dustbin = int(self.bot_config.get("bot-configuration", "dustbin"))
         self.log_dir = self.bot_config.get("logging-configuration", "logging_dir")
+        self.yt_api_key = self.bot_config.get("youtube-configuration", "api_key")
         self.log_file = Path(f"{self.log_dir}/log.log")
 
     def init(self):

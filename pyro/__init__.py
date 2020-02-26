@@ -1,8 +1,16 @@
 import logging
 from logging.handlers import TimedRotatingFileHandler
-from pyro.utils.common import botCommon, Common
+from pyro.utils.common import botCommon
 
-Common().init()
+"""
+ initiate bot common init function to create necessary directories for the bot
+"""
+
+botCommon.init()
+
+"""
+ Configuration for the logger
+"""
 
 logging.basicConfig(
     level=logging.INFO,
@@ -14,3 +22,9 @@ logging.basicConfig(
     ]
 )
 logging.getLogger(__name__)
+
+
+"""
+ Commonly shared variables across the memory
+"""
+dl_object = {}

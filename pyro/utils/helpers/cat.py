@@ -3,6 +3,7 @@ import aiohttp
 import aiofiles
 import mimetypes
 import secrets
+import random
 from pyro.utils.common import botCommon
 
 
@@ -12,6 +13,7 @@ class cat:
         self.cat_say_endpoint = "https://cataas.com/cat/cute/says/"
         self.cat_gif_endpoint = "https://cataas.com/cat/gif"
         self.cat_facts_endpoint = "https://catfact.ninja/fact"
+        self.cat_breeds_endpoint = "https://catfact.ninja/breeds?limit=1000"
         self.tmp_dir = botCommon.tmp_dir
 
         if not os.path.exists(self.tmp_dir):
@@ -62,3 +64,12 @@ class cat:
             async with catSession.get(self.cat_facts_endpoint) as resp:
                 data = await resp.json()
                 return data['fact']
+
+    async def random_cat_breed(self):
+        async with aiohttp.ClientSession() as catSession:
+            async with catSession.get(self.cat_breeds_endpoint) as resp:
+                data = await resp.json()
+                breeds = []
+                for breed in data['data']:
+                    breeds.append(breed['breed'])
+                return random.choice(breeds)
