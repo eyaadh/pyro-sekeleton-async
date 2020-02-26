@@ -1,9 +1,9 @@
 # Kittenz – Pyro-Skeleton-Async:
 This project was built to demonstrate how we at [@baivaru](https://t.me/Baivaru) structures - 
-their async [pyrogram](https://docs.pyrogram.org/) projects. I could have written a skeleton (directory structures, modules 
+our async [pyrogram](https://docs.pyrogram.org/) projects. I could have written a skeleton (directory structures, modules 
 showing where plugins are loaded from and etc) which you could simply clone and build upon it. 
 However, doing that could have left you halfway through the whole purpose of “making it easier” 
-and having a skeleton. Therefore, the following project is a fully functional bot that would demonstrate 
+and having a skeleton. Therefore, the following project is a fully functional [bot](https://t.me/Kittenzbot) that would demonstrate 
 most of the common methods, functionalities [pyrogram](https://docs.pyrogram.org/) offers you to start programing a simple telegram bot 
 and some clean practices that we at [@baivaru](https://t.me/Baivaru) follow which you could refer and imply with your projects.
 
