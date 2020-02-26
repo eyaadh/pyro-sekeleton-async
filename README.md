@@ -1,4 +1,4 @@
-#Kittenz – Pyro-Skeleton-Async:
+# Kittenz – Pyro-Skeleton-Async:
 This project was built to demonstrate how we at [@baivaru](https://t.me/Baivaru) structures - 
 their async [pyrogram](https://docs.pyrogram.org/) projects. I could have written a skeleton (directory structures, modules 
 showing where plugins are loaded from and etc) which you could simply clone and build upon it. 
