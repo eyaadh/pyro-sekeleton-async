@@ -13,7 +13,7 @@ and some clean practices that we at [@baivaru](https://t.me/Baivaru) follow whic
 1. `git clone https://github.com/eyaadh/pyro-sekeleton-async.git`, to clone the repository.
 2. `cd pyro-sekeleton-async`, to enter the directory.
 3. `pip3 install -U https://github.com/pyrogram/pyrogram/archive/asyncio.zip`, to install pyrogram-asyncio.
-4. `pip3 install -r requirments.txt`, to install rest of the dependencies/requirements.
+4. `pip3 install -r requirements.txt`, to install rest of the dependencies/requirements.
 5. Create a new `config.ini` using the sample available at `pyro-sekeleton-async\working_dir`.
 6. Run with `python3.8 -m pyro`, stop with <kbd>CTRL</kbd>+<kbd>C</kbd>.
 > It is recommended to use [virtual environments](https://docs.python-guide.org/dev/virtualenvs/) while running the app, this is a good practice you can use at any of your python projects as virtualenv creates an isolated Python environment which is specific to your project.
