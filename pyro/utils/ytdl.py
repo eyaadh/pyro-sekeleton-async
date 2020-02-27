@@ -3,14 +3,18 @@ import youtube_dl
 import time
 import asyncio
 from pyro.utils.common import botCommon
+from pyrogram import Client
 
 progress_status = {}
-progress_status_msg_counter = {}
-
-
 class yt_dl:
     @staticmethod
-    async def progress_hooks(d):
+    async def update_dl_progress(chat_id, message_id):
+        client = Client(":memory:", config_file=botCommon.bot_config_file, bot_token=botCommon.bot_api_key)
+        async with client:
+            await client.send_message(int(chat_id), "test")
+
+    @staticmethod
+    def progress_hooks(d):
         if d["status"] == "downloading":
             tmp_dir = os.path.basename(os.path.dirname(d["filename"]))
             vid_id, chat_id, message_id = tmp_dir.split("+")
@@ -22,30 +26,16 @@ class yt_dl:
                     "speed": d['speed']
                 }
             }
-            progress_status.update(job_details)
+            loop = asyncio.get_running_loop()
+            loop.run_until_complete(yt_dl.update_dl_progress(chat_id, message_id))
 
     @staticmethod
-    async def dl(vid_id, chat_id, message_id, client):
+    async def dl(vid_id, chat_id, message_id):
         tmp_dir = os.path.join(botCommon.tmp_dir, f"{vid_id}+{chat_id}+{message_id}")
         if not os.path.exists(tmp_dir):
             os.makedirs(tmp_dir)
 
-        await client.edit_message_text(
-            chat_id=chat_id,
-            message_id=message_id,
-            text="<code>Starting the download...</code>",
-            parse_mode="html"
-        )
-
         global progress_status
-        global progress_status_msg_counter
-
-        job_details = {
-            f"{chat_id}+{message_id}": {
-                "last_updated": time.time(),
-            }
-        }
-        progress_status_msg_counter.update(job_details)
 
         job_details = {
             f"{chat_id}+{message_id}": {
@@ -56,25 +46,6 @@ class yt_dl:
         }
         progress_status.update(job_details)
 
-        while progress_status[f"{chat_id}+{message_id}"]["status"] == "downloading":
-            if time.time() - int(progress_status_msg_counter[f"{chat_id}+{message_id}"]['last_updated']):
-                try:
-                    await client.edit_message_text(
-                        chat_id=chat_id,
-                        message_id=message_id,
-                        text=f"<code>{progress_status[f'{chat_id}+{message_id}']['progress']}</code>",
-                        parse_mode="html"
-                    )
-                    job_details = {
-                        f"{chat_id}+{message_id}": {
-                            "last_updated": time.time(),
-                        }
-                    }
-                    progress_status_msg_counter.update(job_details)
-                except:
-                    pass
-            await asyncio.sleep(1)
-
         ydlOpts = {
             'format': "bestvideo[height<=480][ext=mp4]+bestaudio/best",
             'progress_hooks': [yt_dl().progress_hooks],
@@ -84,4 +55,3 @@ class yt_dl:
         }
         with youtube_dl.YoutubeDL(ydlOpts) as yt:
             yt.download([f'http://www.youtube.com/watch?v={vid_id}'])
-

@@ -13,5 +13,5 @@ async def cat_breed_handler(c: bot, m: Message):
     )
     cat_breed = await cat().random_cat_breed()
     search_term = f"cat 101 {cat_breed}"
-    youtube_result = await youtube().search_yt(search_term)
-    await yt_dl().dl(youtube_result[0]['video_id'], m.chat.id, ack.message_id, c)
+    # youtube_result = await youtube().search_yt(search_term)
+    await yt_dl().dl('W65lD8A_5Rk', m.chat.id, ack.message_id)
