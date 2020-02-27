@@ -22,9 +22,3 @@ logging.basicConfig(
     ]
 )
 logging.getLogger(__name__)
-
-
-"""
- Commonly shared variables across the memory
-"""
-dl_object = {}
