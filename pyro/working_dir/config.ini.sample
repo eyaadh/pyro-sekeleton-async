@@ -1,7 +1,9 @@
 [pyrogram]
+# https://docs.pyrogram.org/intro/setup#api-keys
 api_id = xxxxx
 api_hash = xxxxxxxxxxx
 [plugins]
+# https://docs.pyrogram.org/topics/smart-plugins
 root = pyro/plugins
 [bot-configuration]
 session_name = bot-skeleton
@@ -12,4 +14,5 @@ dustbin = -1001318471833
 [logging-configuration]
 logging_dir = /tmp/pyro-skeleton
 [youtube-configuration]
+# https://developers.google.com/youtube/registering_an_application#Create_API_Keys
 api_key = xxxxxxxxxxxxxxx
