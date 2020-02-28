@@ -1,3 +1,5 @@
+humanfriendly
+humanreadable
 aiofiles==0.4.0
 aiohttp==3.6.2
 async-generator==1.10

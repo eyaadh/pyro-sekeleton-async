@@ -1,7 +1,6 @@
 from pyro.bot import bot
-from pyro.utils.helpers.cat import cat
-from pyro.utils.helpers.youtube import youtube
 from pyro.utils.ytdl import yt_dl
+from pyro.utils.helpers.cat import cat
 from pyrogram import Message, Filters
 
 
@@ -14,4 +13,4 @@ async def cat_breed_handler(c: bot, m: Message):
     cat_breed = await cat().random_cat_breed()
     search_term = f"cat 101 {cat_breed}"
     # youtube_result = await youtube().search_yt(search_term)
-    await yt_dl().dl('W65lD8A_5Rk', m.chat.id, ack.message_id)
+    await yt_dl().dl_initiator('W65lD8A_5Rk', m.chat.id, ack.message_id, c)
