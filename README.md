@@ -67,4 +67,7 @@ More details on config files and configparser can be found [here.](https://docs.
 4. [youtube-dl](https://youtube-dl.org/)
 5. [aiohttp](https://pypi.org/project/aiohttp/3.6.2/)
 6. [aiofiles](https://pypi.org/project/aiofiles/)
+7. [humanfriendly](https://humanfriendly.readthedocs.io/en/latest/)
+8. [humanreadable](https://github.com/thombashi/humanreadable)
+9. [nest-asyncio](https://github.com/erdewit/nest_asyncio)
 
