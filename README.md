@@ -34,7 +34,7 @@ us to simplify and organize large projects with modular base components. More in
 smart plugins can be found [here.](https://docs.pyrogram.org/topics/smart-plugins) 
 
 #### utils:
-The name utils define exactly what this directory is for. All the 3rd party utilities (which do not deal with telegram & pyrogram) 
+The name utils define exactly what this directory is for. All the 3rd party utilities 
 that helps the application to work through is kept in this directory, such as DB module (if that exists), a module called common 
 which loads the required external variables(mostly configurations from configs.ini) and etc.
 
