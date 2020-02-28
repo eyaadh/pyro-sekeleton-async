@@ -63,7 +63,7 @@ class yt_dl:
         await cl.send_video(
             chat_id=chat_id,
             video=file,
-            duration=int(video_info),
+            duration=int(video_info['duration']),
             thumb=str(file).replace(Path(file).suffix, ".jpg"),
             progress=yt_dl().upload_progress_update,
             progress_args=[chat_id, message_id, start_time]
