@@ -2,10 +2,12 @@ import os
 import shutil
 import time
 import asyncio
+import logging
 import youtube_dl
 import humanfriendly
 import humanreadable as hr
 from pyro.utils.common import botCommon
+from pyrogram.errors import MessageNotModified, FloodWait
 
 progress_status_time = {}
 cl = None
@@ -22,20 +24,26 @@ class yt_dl:
         up_speed_split = str(up_speed_converted_raw).split(".")[0]
 
         if time.time() - int(progress_status_time[f"{chat_id}+{message_id}"]["last_updated"]) > 3:
-            await cl.edit_message_text(
-                chat_id=chat_id,
-                message_id=message_id,
-                text=f"<code>Progress: Uploading \n"
-                     f"Uploaded: {humanfriendly.format_size(int(upload), binary=True)} of "
-                     f"{humanfriendly.format_size(int(total), binary=True)}\n"
-                     f"Speed: {up_speed_split} MiBps</code>"
-            )
-            job_update_timing = {
-                f"{chat_id}+{message_id}": {
-                    "last_updated": time.time()
+            try:
+                await cl.edit_message_text(
+                    chat_id=chat_id,
+                    message_id=message_id,
+                    text=f"<code>Progress: Uploading \n"
+                         f"Uploaded: {humanfriendly.format_size(int(upload), binary=True)} of "
+                         f"{humanfriendly.format_size(int(total), binary=True)}\n"
+                         f"Speed: {up_speed_split} MiBps</code>"
+                )
+                job_update_timing = {
+                    f"{chat_id}+{message_id}": {
+                        "last_updated": time.time()
+                    }
                 }
-            }
-            progress_status_time.update(job_update_timing)
+                progress_status_time.update(job_update_timing)
+            except MessageNotModified as e:
+                logging.error(str(e))
+            except FloodWait as e:
+                logging.error(str(e))
+                await asyncio.sleep(e.x)
 
     @staticmethod
     async def upload_file_to_tg(chat_id, message_id, file):
@@ -59,9 +67,8 @@ class yt_dl:
 
         try:
             shutil.rmtree(os.path.dirname(file))
-
         except Exception as e:
-            print(str(e))
+            logging.error(str(e))
 
     @staticmethod
     async def update_dl_progress(chat_id, message_id, d):
@@ -72,19 +79,26 @@ class yt_dl:
             dl_speed_raw = d['speed'] if d['speed'] else 0
             dl_speed_converted_raw = hr.BitPerSecond(str(dl_speed_raw), default_unit=hr.BitPerSecond.Unit.BPS).mega_bps
             dl_speed_split = str(dl_speed_converted_raw).split(".")[0]
-            await cl.edit_message_text(
-                chat_id=int(chat_id),
-                message_id=int(message_id),
-                text=f"<code>Progress: Downloading \n"
-                     f"Downloaded: {humanfriendly.format_size(int(d['downloaded_bytes']), binary=True)} \n"
-                     f"Speed: {dl_speed_split} MiBps</code>"
-            )
-            job_update_timing = {
-                f"{chat_id}+{message_id}": {
-                    "last_updated": time.time()
+            try:
+                await cl.edit_message_text(
+                    chat_id=int(chat_id),
+                    message_id=int(message_id),
+                    text=f"<code>Progress: Downloading \n"
+                         f"Downloaded: {humanfriendly.format_size(int(d['downloaded_bytes']), binary=True)} of "
+                         f"{humanfriendly.format_size(int(d['total_bytes']), binary=True)} \n"
+                         f"Speed: {dl_speed_split} MiBps</code>"
+                )
+                job_update_timing = {
+                    f"{chat_id}+{message_id}": {
+                        "last_updated": time.time()
+                    }
                 }
-            }
-            progress_status_time.update(job_update_timing)
+                progress_status_time.update(job_update_timing)
+            except MessageNotModified as e:
+                logging.error(str(e))
+            except FloodWait as e:
+                logging.error(str(e))
+                await asyncio.sleep(e.x)
 
     @staticmethod
     def progress_hooks(d):
@@ -116,7 +130,7 @@ class yt_dl:
         progress_status_time.update(job_update_timing)
 
         ydlOpts = {
-            'format': "bestvideo[height<=480]+bestaudio/best",
+            'format': "bestvideo[height<=480][ext=mp4]+bestaudio[height<=480][ext=m4a]/best",
             'progress_hooks': [yt_dl().progress_hooks],
             'noplaylist': 'true',
             'outtmpl': f'{tmp_dir}/%(title)s.%(ext)s',
