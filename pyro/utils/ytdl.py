@@ -5,6 +5,7 @@ import asyncio
 import logging
 import youtube_dl
 import humanfriendly
+from pathlib import Path
 import humanreadable as hr
 from pyro.utils.common import botCommon
 from pyrogram.errors import MessageNotModified, FloodWait
@@ -46,14 +47,24 @@ class yt_dl:
                 await asyncio.sleep(e.x)
 
     @staticmethod
-    async def upload_file_to_tg(chat_id, message_id, file):
+    async def upload_file_to_tg(chat_id, message_id, file, vid_id):
         global cl
         global progress_status_time
+
+        ydlOpts = {}
+
+        with youtube_dl.YoutubeDL(ydlOpts) as yt:
+            video_info = yt.extract_info(
+                'http://www.youtube.com/watch?v=BaW_jenozKc',
+                download=False  # We just want to extract the info
+            )
 
         start_time = time.time()
         await cl.send_video(
             chat_id=chat_id,
             video=file,
+            duration=int(video_info),
+            thumb=str(file).replace(Path(file).suffix, ".jpg"),
             progress=yt_dl().upload_progress_update,
             progress_args=[chat_id, message_id, start_time]
         )
@@ -109,7 +120,7 @@ class yt_dl:
             loop.run_until_complete(yt_dl().update_dl_progress(int(chat_id), int(message_id), d))
         elif d["status"] == "finished":
             loop = asyncio.get_event_loop()
-            loop.run_until_complete(yt_dl().upload_file_to_tg(int(chat_id), int(message_id), d["filename"]))
+            loop.run_until_complete(yt_dl().upload_file_to_tg(int(chat_id), int(message_id), d["filename"], vid_id))
 
     @staticmethod
     async def dl_initiator(vid_id, chat_id, message_id, client):
@@ -134,7 +145,8 @@ class yt_dl:
             'progress_hooks': [yt_dl().progress_hooks],
             'noplaylist': 'true',
             'outtmpl': f'{tmp_dir}/%(title)s.%(ext)s',
-            'ignoreerrors': 'true'
+            'ignoreerrors': 'true',
+            'writethumbnail': True
         }
         with youtube_dl.YoutubeDL(ydlOpts) as yt:
             yt.download([f'http://www.youtube.com/watch?v={vid_id}'])
